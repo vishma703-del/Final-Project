@@ -136,7 +136,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Build and train large language models, neural networks, and computer vision systems that solve complex automated challenges.',
     typicalDay: 'Formulate hypotheses, train transformer models, benchmark loss metrics, and write clean PyTorch/Python code.',
-    salaryRange: '$120,000 - $240,000 / yr',
+    salaryRange: 'PKR 4,800,000 - 66,000,000 / yr',
     growthOutlook: 'Explosive',
     entryMajors: ['Computer Science', 'Artificial Intelligence', 'Data Science', 'Applied Mathematics'],
     keySkills: ['Python & PyTorch', 'Linear Algebra & Calculus', 'Data Pipelines', 'Prompt Optimization', 'Model Fine-Tuning'],
@@ -150,7 +150,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Design digital experiences, mobile apps, and interactive products that are intuitive, visually breathtaking, and human-centric.',
     typicalDay: 'Interview users, map journey flows, prototype Figma animations, and collaborate with frontend developers.',
-    salaryRange: '$85,000 - $160,000 / yr',
+    salaryRange: 'PKR 3,200,000 - 44,000,000 / yr',
     growthOutlook: 'Very High',
     entryMajors: ['Interactive Design', 'Human-Computer Interaction (HCI)', 'Graphic Design', 'Cognitive Science'],
     keySkills: ['Figma Prototyping', 'User Research & Wireframing', 'Design Systems', 'Micro-Interactions', 'Information Architecture'],
@@ -164,7 +164,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Found and steer modern startups, recruit top tier talent, pitch to venture capitalists, and bring innovative products to market.',
     typicalDay: 'Pitching angel investors, mentoring tech teams, evaluating financial burn rates, and defining strategic product vision.',
-    salaryRange: '$90,000 - $300,000+ / yr',
+    salaryRange: 'PKR 4,500,000 - 85,000,000+ / yr',
     growthOutlook: 'High',
     entryMajors: ['Business Administration', 'Computer Science & Management', 'Economics', 'Entrepreneurship'],
     keySkills: ['Visionary Storytelling', 'Fundraising & Valuation', 'Team Leadership', 'GTM Strategy', 'Resilience'],
@@ -178,7 +178,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Analyze genomic datasets to discover targeted cancer cures, CRISPR therapies, and synthetic biology breakthroughs.',
     typicalDay: 'Run sequencing algorithms, interpret protein folding simulations, and review laboratory clinical trials.',
-    salaryRange: '$95,000 - $175,000 / yr',
+    salaryRange: 'PKR 3,500,000 - 48,000,000 / yr',
     growthOutlook: 'Very High',
     entryMajors: ['Bioinformatics', 'Molecular Biology', 'Biomedical Engineering', 'Genetics'],
     keySkills: ['Genomic Analysis', 'R & BioPython', 'Statistical Genetics', 'Lab Protocol', 'CRISPR Techniques'],
@@ -192,7 +192,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Protect national infrastructure, financial networks, and consumer data from advanced state-sponsored cyberattacks.',
     typicalDay: 'Audit network packets, perform penetration testing, engineer zero-trust protocols, and respond to breaches.',
-    salaryRange: '$95,000 - $185,000 / yr',
+    salaryRange: 'PKR 3,600,000 - 51,000,000 / yr',
     growthOutlook: 'Explosive',
     entryMajors: ['Cybersecurity', 'Computer Networks', 'Information Systems', 'Software Engineering'],
     keySkills: ['Network Forensics', 'Penetration Testing (Kali)', 'Cryptography', 'SIEM & SOC Tools', 'Risk Compliance'],
@@ -206,7 +206,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Design, build, and calibrate autonomous drones, humanoid robots, and surgical robotic systems.',
     typicalDay: 'Solder microcontrollers, simulate kinematics in ROS, test lidar sensors, and test physical prototypes in maker labs.',
-    salaryRange: '$100,000 - $190,000 / yr',
+    salaryRange: 'PKR 3,800,000 - 52,000,000 / yr',
     growthOutlook: 'Very High',
     entryMajors: ['Robotics Engineering', 'Mechanical Engineering', 'Mechatronics', 'Electrical Engineering'],
     keySkills: ['C++ & ROS 2', 'SolidWorks CAD', 'Microcontrollers & PCBs', 'Kinematics', 'Embedded Systems'],
@@ -220,7 +220,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Support youth and adults through cognitive behavioral therapy, mental health guidance, and neurodiversity assessments.',
     typicalDay: 'Conduct 1-on-1 therapeutic sessions, formulate tailored mental health strategies, and administer psychometric tests.',
-    salaryRange: '$80,000 - $150,000 / yr',
+    salaryRange: 'PKR 2,400,000 - 41,000,000 / yr',
     growthOutlook: 'High',
     entryMajors: ['Psychology', 'Cognitive Science', 'Clinical Social Work', 'Neuroscience'],
     keySkills: ['Therapeutic Rapport', 'CBT/DBT Methodologies', 'Diagnostic Assessment', 'Crisis De-escalation', 'Empathy'],
@@ -234,7 +234,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Develop next-generation solar grids, offshore wind turbines, battery storage systems, and carbon capture infrastructure.',
     typicalDay: 'Model grid capacity, run fluid dynamic simulations, inspect thermal storage modules, and optimize energy yields.',
-    salaryRange: '$90,000 - $165,000 / yr',
+    salaryRange: 'PKR 3,200,000 - 45,000,000 / yr',
     growthOutlook: 'Explosive',
     entryMajors: ['Sustainable Energy Engineering', 'Environmental Science', 'Electrical Engineering', 'Civil Engineering'],
     keySkills: ['Energy Modeling', 'Grid Architecture', 'Thermodynamics', 'Environmental Impact Assessment', 'GIS Mapping'],
@@ -248,7 +248,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Define visual identity, viral culture campaigns, high-fashion styling, or entertainment narratives for global brands.',
     typicalDay: 'Moodboard concept design, lead photoshoots, guide copywriters, and pitch brand revamp campaigns to executive boards.',
-    salaryRange: '$90,000 - $190,000 / yr',
+    salaryRange: 'PKR 3,500,000 - 52,000,000 / yr',
     growthOutlook: 'High',
     entryMajors: ['Advertising & Brand Design', 'Fine Arts', 'Marketing Communication', 'Media Studies'],
     keySkills: ['Creative Direction', 'Typography & Palette Mastery', 'Storytelling', 'Campaign Pitching', 'Cultural Trend Forecasting'],
@@ -262,7 +262,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Apply mathematical algorithms, high-frequency execution pipelines, and blockchain systems to capital markets.',
     typicalDay: 'Backtest statistical arbitrage models, monitor financial risk exposures, and build automated execution scripts.',
-    salaryRange: '$130,000 - $350,000+ / yr',
+    salaryRange: 'PKR 5,500,000 - 95,000,000+ / yr',
     growthOutlook: 'High',
     entryMajors: ['Quantitative Finance', 'Financial Engineering', 'Mathematics', 'Statistics & Economics'],
     keySkills: ['Algorithmic Modeling', 'Python/C++', 'Stochastic Calculus', 'Financial Risk Analytics', 'Portfolio Optimization'],
@@ -276,7 +276,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Advocate for human rights, ethical AI governance, digital privacy, and international climate agreements.',
     typicalDay: 'Draft policy briefs, litigate before appellate courts, interview affected communities, and negotiate treaties.',
-    salaryRange: '$85,000 - $180,000 / yr',
+    salaryRange: 'PKR 3,000,000 - 49,000,000 / yr',
     growthOutlook: 'High',
     entryMajors: ['Pre-Law', 'Political Science', 'Philosophy, Politics & Economics (PPE)', 'International Relations'],
     keySkills: ['Legal Research & Writing', 'Oral Argumentation', 'Statutory Interpretation', 'Diplomacy', 'Ethical Governance'],
@@ -290,7 +290,7 @@ export const CAREERS_DATABASE: Career[] = [
     description:
       'Decode human cognitive biases and behavioral patterns to help tech products feel delightful, accessible, and intuitive.',
     typicalDay: 'Run eye-tracking tests, conduct contextual inquiries, synthesize qualitative empathy maps, and advise designers.',
-    salaryRange: '$90,000 - $155,000 / yr',
+    salaryRange: 'PKR 3,200,000 - 42,000,000 / yr',
     growthOutlook: 'Very High',
     entryMajors: ['Cognitive Psychology', 'Anthropology', 'Human Factors Engineering', 'Sociology'],
     keySkills: ['Qualitative & Quantitative Research', 'Usability Testing', 'Empathy Mapping', 'Statistical Survey Design'],

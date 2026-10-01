@@ -7,10 +7,9 @@ import {
   Sparkles,
   RotateCcw,
   CheckCircle2,
-  HelpCircle,
   Zap,
   ListFilter,
-  ShieldAlert,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAssessment } from '../context/AssessmentContext.tsx';
 import { CALIPS_CATEGORIES } from '../data/calipsData.ts';
@@ -66,7 +65,6 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
 
   const handleSelectAnswer = (val: boolean) => {
     setAnswer(currentQ.id, val);
-    // Smooth auto-advance to next question if not at end
     if (currentQuestionIndex < totalQuestions - 1) {
       setTimeout(() => {
         goToNext();
@@ -79,7 +77,6 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
     onComplete();
   };
 
-  // Group questions by category for quick overview
   const categorySummary: Record<CalipsCategory, { total: number; answered: number }> = {
     C: { total: 10, answered: 0 },
     A: { total: 10, answered: 0 },
@@ -104,7 +101,7 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
         <div className="flex items-center justify-between">
           <button
             onClick={onCancel}
-            className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Overview</span>
@@ -115,24 +112,24 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
             <button
               onClick={() => fillSampleAnswers('I')}
               title="Autofill realistic answers for quick evaluation"
-              className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 transition-all cursor-pointer"
+              className="flex items-center gap-1 px-3 py-1 rounded-xl text-xs font-bold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition-all cursor-pointer shadow-xs"
             >
-              <Zap className="w-3.5 h-3.5 text-amber-400" />
+              <Zap className="w-3.5 h-3.5 text-amber-600" />
               <span>Quick Test Fill</span>
             </button>
 
             <button
               onClick={() => setShowQuestionGrid(!showQuestionGrid)}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all cursor-pointer"
+              className="flex items-center gap-1 px-3 py-1 rounded-xl text-xs font-bold bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 transition-all cursor-pointer shadow-xs"
             >
-              <ListFilter className="w-3.5 h-3.5" />
+              <ListFilter className="w-3.5 h-3.5 text-slate-500" />
               <span>Grid ({completedCount}/60)</span>
             </button>
 
             <button
               onClick={resetAssessment}
               title="Reset all answers"
-              className="p-1 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-slate-800 transition-colors"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
@@ -140,26 +137,26 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
         </div>
 
         {/* Global Progress Bar */}
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-xs font-semibold">
-            <span className="text-slate-300">
+        <div className="space-y-1.5 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+          <div className="flex items-center justify-between text-xs font-bold">
+            <span className="text-slate-700">
               Question {currentQuestionIndex + 1} of {totalQuestions}
             </span>
-            <span className="text-indigo-400 font-mono">
+            <span className="text-indigo-600 font-mono">
               {completedCount} answered ({progressPercentage}%)
             </span>
           </div>
 
-          <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+          <div className="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-indigo-500 via-pink-500 to-cyan-400 transition-all duration-300 rounded-full"
+              className="h-full bg-gradient-to-r from-indigo-500 via-pink-500 to-amber-400 transition-all duration-300 rounded-full"
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
         </div>
 
         {/* Category Step Pills */}
-        <div className="grid grid-cols-6 gap-1.5 pt-1">
+        <div className="grid grid-cols-6 gap-2 pt-1">
           {categoriesOrder.map((cat) => {
             const isCurrentCat = currentQ.category === cat;
             const stats = categorySummary[cat];
@@ -172,16 +169,16 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
                   const firstQIdx = questions.findIndex((q) => q.category === cat);
                   if (firstQIdx !== -1) jumpToQuestion(firstQIdx);
                 }}
-                className={`py-2 px-1 rounded-xl text-center transition-all cursor-pointer ${
+                className={`py-2 px-1 rounded-2xl text-center transition-all cursor-pointer ${
                   isCurrentCat
-                    ? 'bg-indigo-600/30 border-2 border-indigo-500 text-white shadow-md'
+                    ? 'bg-indigo-600 text-white shadow-md'
                     : isFull
-                    ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-400'
-                    : 'bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700'
+                    ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
+                    : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
                 }`}
               >
-                <div className="text-xs font-bold font-mono">{cat}</div>
-                <div className="text-[10px] opacity-80">
+                <div className="text-xs font-black font-mono">{cat}</div>
+                <div className="text-[10px] opacity-80 font-semibold">
                   {stats.answered}/{stats.total}
                 </div>
               </button>
@@ -192,12 +189,12 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
 
       {/* Popover / Collapsible Question Jump Grid */}
       {showQuestionGrid && (
-        <div className="mb-6 p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-2xl backdrop-blur-xl">
-          <div className="flex items-center justify-between mb-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+        <div className="mb-6 p-5 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-3">
+          <div className="flex items-center justify-between">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-800">
               Jump to any question (60 Questions)
             </h4>
-            <span className="text-xs text-slate-400">Green = Answered</span>
+            <span className="text-xs text-emerald-600 font-semibold">Green = Answered</span>
           </div>
 
           <div className="grid grid-cols-10 sm:grid-cols-15 gap-1.5">
@@ -211,12 +208,12 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
                     jumpToQuestion(idx);
                     setShowQuestionGrid(false);
                   }}
-                  className={`h-8 rounded-lg text-xs font-bold font-mono transition-all cursor-pointer ${
+                  className={`h-8 rounded-xl text-xs font-bold font-mono transition-all cursor-pointer ${
                     isCurrent
-                      ? 'ring-2 ring-indigo-400 bg-indigo-600 text-white'
+                      ? 'ring-2 ring-indigo-500 bg-indigo-600 text-white shadow'
                       : answered
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                      : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                      ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
                   {q.id}
@@ -228,41 +225,36 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
       )}
 
       {/* MAIN QUESTION CARD */}
-      <div className="relative rounded-3xl p-6 sm:p-10 bg-slate-900/90 border border-slate-800 shadow-2xl backdrop-blur-xl overflow-hidden min-h-[380px] flex flex-col justify-between">
-        {/* Subtle category gradient background accent */}
-        <div
-          className={`absolute -top-24 -right-24 w-80 h-80 rounded-full blur-3xl opacity-20 pointer-events-none bg-gradient-to-br ${categoryInfo.color}`}
-        />
-
+      <div className="relative rounded-3xl p-6 sm:p-10 bg-white border border-slate-200 shadow-xl shadow-indigo-500/5 min-h-[380px] flex flex-col justify-between overflow-hidden">
         <div className="relative space-y-6">
           {/* Category Tag Header */}
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
-              <span className="px-3 py-1 rounded-lg text-xs font-mono font-bold bg-slate-800 border border-slate-700 text-white">
-                Category {currentQ.category}
+              <span className="px-3 py-1 rounded-xl text-xs font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                Dimension {currentQ.category}
               </span>
-              <span className="text-sm font-semibold text-indigo-400">
+              <span className="text-sm font-bold text-slate-800">
                 {currentQ.categoryTitle}: {currentQ.categorySubtitle}
               </span>
             </div>
 
-            <span className="text-xs font-mono text-slate-400">
-              Q{currentQ.id} of 60
+            <span className="text-xs font-mono text-slate-400 font-semibold">
+              Question {currentQ.id} of 60
             </span>
           </div>
 
-          {/* The Big Question Text */}
+          {/* Question Text */}
           <div className="py-4">
-            <h2 className="text-2xl sm:text-3xl font-semibold text-white leading-snug tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-snug tracking-tight">
               "{currentQ.question}"
             </h2>
-            <p className="text-xs text-slate-400 mt-3">
-              Be authentic — choose what feels natural to your genuine instincts.
+            <p className="text-xs text-slate-500 mt-3 font-medium">
+              Choose what feels most natural to you. There are no right or wrong answers.
             </p>
           </div>
         </div>
 
-        {/* TRUE / FALSE SELECTION BUTTONS */}
+        {/* TRUE / FALSE DAYLIGHT BUTTONS */}
         <div className="relative pt-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* TRUE BUTTON */}
@@ -270,27 +262,27 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
               onClick={() => handleSelectAnswer(true)}
               className={`group flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200 cursor-pointer ${
                 currentAnswer === true
-                  ? 'bg-emerald-500/15 border-emerald-500 shadow-lg shadow-emerald-500/20 text-white'
-                  : 'bg-slate-950/60 border-slate-800 hover:border-emerald-500/50 hover:bg-slate-800/80 text-slate-200'
+                  ? 'bg-emerald-50 border-emerald-500 shadow-md shadow-emerald-500/10 text-emerald-950'
+                  : 'bg-slate-50/80 border-slate-200 hover:border-emerald-400 hover:bg-emerald-50/40 text-slate-800'
               }`}
             >
               <div className="flex items-center gap-3.5">
                 <div
                   className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
                     currentAnswer === true
-                      ? 'bg-emerald-500 text-slate-950 font-bold'
-                      : 'bg-slate-800 text-emerald-400 group-hover:bg-emerald-500/20'
+                      ? 'bg-emerald-500 text-white font-bold'
+                      : 'bg-white border border-slate-200 text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white'
                   }`}
                 >
                   <Check className="w-5 h-5 stroke-[3]" />
                 </div>
                 <div className="text-left">
                   <div className="text-lg font-bold">YES / TRUE</div>
-                  <div className="text-xs text-slate-400">This describes me well</div>
+                  <div className="text-xs text-slate-500 font-medium">This describes me well</div>
                 </div>
               </div>
 
-              <kbd className="hidden sm:inline-block px-2 py-1 text-[11px] font-mono text-slate-400 bg-slate-800/90 rounded border border-slate-700">
+              <kbd className="hidden sm:inline-block px-2 py-1 text-[11px] font-mono text-slate-500 bg-white rounded border border-slate-200">
                 Key: T
               </kbd>
             </button>
@@ -300,8 +292,8 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
               onClick={() => handleSelectAnswer(false)}
               className={`group flex items-center justify-between p-5 rounded-2xl border-2 transition-all duration-200 cursor-pointer ${
                 currentAnswer === false
-                  ? 'bg-rose-500/15 border-rose-500 shadow-lg shadow-rose-500/20 text-white'
-                  : 'bg-slate-950/60 border-slate-800 hover:border-rose-500/50 hover:bg-slate-800/80 text-slate-200'
+                  ? 'bg-rose-50 border-rose-500 shadow-md shadow-rose-500/10 text-rose-950'
+                  : 'bg-slate-50/80 border-slate-200 hover:border-rose-400 hover:bg-rose-50/40 text-slate-800'
               }`}
             >
               <div className="flex items-center gap-3.5">
@@ -309,18 +301,18 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
                   className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
                     currentAnswer === false
                       ? 'bg-rose-500 text-white font-bold'
-                      : 'bg-slate-800 text-rose-400 group-hover:bg-rose-500/20'
+                      : 'bg-white border border-slate-200 text-rose-600 group-hover:bg-rose-500 group-hover:text-white'
                   }`}
                 >
                   <X className="w-5 h-5 stroke-[3]" />
                 </div>
                 <div className="text-left">
                   <div className="text-lg font-bold">NO / FALSE</div>
-                  <div className="text-xs text-slate-400">Not really my preference</div>
+                  <div className="text-xs text-slate-500 font-medium">Not really my preference</div>
                 </div>
               </div>
 
-              <kbd className="hidden sm:inline-block px-2 py-1 text-[11px] font-mono text-slate-400 bg-slate-800/90 rounded border border-slate-700">
+              <kbd className="hidden sm:inline-block px-2 py-1 text-[11px] font-mono text-slate-500 bg-white rounded border border-slate-200">
                 Key: F
               </kbd>
             </button>
@@ -333,7 +325,7 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
         <button
           onClick={goToPrevious}
           disabled={currentQuestionIndex === 0}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 disabled:opacity-40 disabled:pointer-events-none transition-all cursor-pointer text-xs font-semibold"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 disabled:opacity-40 disabled:pointer-events-none transition-all cursor-pointer text-xs font-bold shadow-xs"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Previous</span>
@@ -344,7 +336,7 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
             <button
               onClick={handleFinish}
               disabled={isSubmitting}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-indigo-600 hover:from-pink-400 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-indigo-500/30 transition-all cursor-pointer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-indigo-600 hover:from-pink-500 hover:to-indigo-500 text-white text-xs font-bold shadow-md shadow-indigo-600/20 transition-all cursor-pointer"
             >
               <Sparkles className="w-4 h-4" />
               <span>
@@ -358,7 +350,7 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
           {currentQuestionIndex < totalQuestions - 1 ? (
             <button
               onClick={goToNext}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/30 transition-all cursor-pointer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md shadow-indigo-600/20 transition-all cursor-pointer"
             >
               <span>Next</span>
               <ArrowRight className="w-4 h-4" />
@@ -367,21 +359,13 @@ export const AssessmentRunner: React.FC<AssessmentRunnerProps> = ({ onComplete, 
             <button
               onClick={handleFinish}
               disabled={isSubmitting}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold shadow-lg shadow-emerald-500/30 transition-all cursor-pointer"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md shadow-emerald-600/20 transition-all cursor-pointer"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>Generate My PathCode!</span>
             </button>
           )}
         </div>
-      </div>
-
-      {/* Exploration Reminder Footnote */}
-      <div className="mt-8 text-center text-xs text-slate-500 max-w-xl mx-auto">
-        <span>
-          Remember: PathCode is an exploratory navigator to unlock possibilities. You are never locked into a single
-          result.
-        </span>
       </div>
     </div>
   );

@@ -41,7 +41,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           school,
           department,
           email,
-          password,
         });
         if (!res.success) {
           setErrorMsg(res.error || 'Registration failed');

@@ -15,6 +15,7 @@ export interface StudentProfile {
   school: string;
   email: string;
   department: string;
+  assignedPassword?: string;
   avatarUrl?: string;
   createdAt: string;
   savedCareers?: string[];

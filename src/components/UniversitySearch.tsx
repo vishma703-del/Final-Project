@@ -3,18 +3,16 @@ import {
   GraduationCap,
   Search,
   Globe,
-  MapPin,
   Bookmark,
   ExternalLink,
-  Filter,
-  CheckCircle2,
+  Banknote,
 } from 'lucide-react';
 import {
-  UNIVERSITIES_DATABASE,
+  getResolvedUniversities,
   getAllCountries,
   getCitiesByCountry,
 } from '../data/universitiesData.ts';
-import { CalipsCategory, University } from '../types/index.ts';
+import { CalipsCategory } from '../types/index.ts';
 import { useAuth } from '../context/AuthContext.tsx';
 
 export const UniversitySearch: React.FC = () => {
@@ -34,7 +32,8 @@ export const UniversitySearch: React.FC = () => {
   }, [selectedCountry]);
 
   const filteredUniversities = useMemo(() => {
-    return UNIVERSITIES_DATABASE.filter((uni) => {
+    const allUnis = getResolvedUniversities();
+    return allUnis.filter((uni) => {
       // Query filter
       if (searchQuery.trim() !== '') {
         const q = searchQuery.toLowerCase();
@@ -47,12 +46,12 @@ export const UniversitySearch: React.FC = () => {
       }
 
       // Country filter
-      if (selectedCountry !== 'All Countries' && uni.country !== selectedCountry) {
+      if (selectedCountry !== 'All Countries' && uni.country.toLowerCase() !== selectedCountry.toLowerCase()) {
         return false;
       }
 
       // City filter
-      if (selectedCity !== 'All Cities' && uni.city !== selectedCity) {
+      if (selectedCity !== 'All Cities' && uni.city.toLowerCase() !== selectedCity.toLowerCase()) {
         return false;
       }
 
@@ -76,26 +75,26 @@ export const UniversitySearch: React.FC = () => {
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 text-xs font-semibold border border-emerald-500/20">
-          <GraduationCap className="w-3.5 h-3.5" />
-          <span>Global Authentic University Directory</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200">
+          <GraduationCap className="w-3.5 h-3.5 text-emerald-600" />
+          <span>Global Authentic University Directory • All Figures in PKR</span>
         </div>
 
-        <h1 className="font-['Space_Grotesk'] text-3xl sm:text-4xl font-extrabold text-white">
+        <h1 className="font-['Space_Grotesk'] text-3xl sm:text-4xl font-extrabold text-slate-900">
           Explore Authentic Universities{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-300 to-indigo-300">
-            Across Countries & Cities
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-cyan-600 to-indigo-600">
+            Across Total Countries & Cities
           </span>
         </h1>
 
-        <p className="text-sm text-slate-300 leading-relaxed">
-          Search genuine top-tier institutions worldwide. Discover acceptance rates, tuition structures, popular
-          academic faculties, and CALIPS behavioral category affinities.
+        <p className="text-sm text-slate-600 leading-relaxed">
+          Direct access to authentic universities across every global nation. Explore official acceptance rates,
+          academic programs, and tuition converted into Pakistani Rupee (PKR).
         </p>
       </div>
 
       {/* FILTER CONTROLS */}
-      <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl space-y-4">
+      <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-lg shadow-slate-200/50 space-y-4">
         {/* Search bar */}
         <div className="relative">
           <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
@@ -104,24 +103,24 @@ export const UniversitySearch: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by university name, major, program, or keyword..."
-            className="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-950 border border-slate-700 focus:border-indigo-500 text-sm text-white placeholder-slate-500"
+            className="w-full pl-11 pr-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 text-sm text-slate-900 placeholder-slate-400"
           />
         </div>
 
         {/* Dropdowns Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-          {/* Country */}
+          {/* Country (Total Countries) */}
           <div className="space-y-1">
-            <label className="text-[11px] font-mono uppercase text-slate-400">Country</label>
+            <label className="text-[11px] font-mono uppercase font-bold text-slate-600">Total Countries ({allCountries.length})</label>
             <select
               value={selectedCountry}
               onChange={(e) => {
                 setSelectedCountry(e.target.value);
                 setSelectedCity('All Cities');
               }}
-              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white"
+              className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800"
             >
-              <option value="All Countries">All Countries</option>
+              <option value="All Countries">All World Countries</option>
               {allCountries.map((c) => (
                 <option key={c} value={c}>
                   {c}
@@ -132,12 +131,12 @@ export const UniversitySearch: React.FC = () => {
 
           {/* City */}
           <div className="space-y-1">
-            <label className="text-[11px] font-mono uppercase text-slate-400">City</label>
+            <label className="text-[11px] font-mono uppercase font-bold text-slate-600">City</label>
             <select
               value={selectedCity}
               disabled={selectedCountry === 'All Countries'}
               onChange={(e) => setSelectedCity(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white disabled:opacity-40"
+              className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800 disabled:opacity-50"
             >
               <option value="All Cities">
                 {selectedCountry === 'All Countries' ? 'Select Country First' : 'All Cities'}
@@ -152,27 +151,28 @@ export const UniversitySearch: React.FC = () => {
 
           {/* Ranking Tier */}
           <div className="space-y-1">
-            <label className="text-[11px] font-mono uppercase text-slate-400">Tier</label>
+            <label className="text-[11px] font-mono uppercase font-bold text-slate-600">Tier</label>
             <select
               value={selectedTier}
               onChange={(e) => setSelectedTier(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white"
+              className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800"
             >
               <option value="All">All Tiers</option>
               <option value="World Top 20">World Top 20</option>
               <option value="World Top 50">World Top 50</option>
               <option value="World Top 100">World Top 100</option>
               <option value="Leading National">Leading National</option>
+              <option value="Specialized Institute">Specialized Institute</option>
             </select>
           </div>
 
           {/* CALIPS Dimension */}
           <div className="space-y-1">
-            <label className="text-[11px] font-mono uppercase text-slate-400">CALIPS Dimension</label>
+            <label className="text-[11px] font-mono uppercase font-bold text-slate-600">Dimension Affinity</label>
             <select
               value={selectedAffinity}
               onChange={(e) => setSelectedAffinity(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white"
+              className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800"
             >
               <option value="All">All Dimensions</option>
               <option value="C">C — Conventional (Organizer)</option>
@@ -186,11 +186,11 @@ export const UniversitySearch: React.FC = () => {
         </div>
       </div>
 
-      {/* RESULTS COUNT & LIST */}
+      {/* RESULTS COUNT & CARDS */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between text-xs text-slate-400">
+        <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
           <span>
-            Showing <strong className="text-white">{filteredUniversities.length}</strong> authentic institutions
+            Showing <strong className="text-slate-900">{filteredUniversities.length}</strong> authentic institutions
           </span>
           {(selectedCountry !== 'All Countries' || selectedCity !== 'All Cities' || searchQuery) && (
             <button
@@ -201,7 +201,7 @@ export const UniversitySearch: React.FC = () => {
                 setSelectedAffinity('All');
                 setSelectedTier('All');
               }}
-              className="text-indigo-400 hover:underline cursor-pointer"
+              className="text-indigo-600 hover:underline cursor-pointer"
             >
               Clear filters
             </button>
@@ -215,17 +215,17 @@ export const UniversitySearch: React.FC = () => {
             return (
               <div
                 key={uni.id}
-                className="p-6 rounded-3xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all flex flex-col justify-between"
+                className="p-6 rounded-3xl bg-white border border-slate-200 hover:border-indigo-400 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div className="space-y-3">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-2">
                       <span className="text-3xl">{uni.flag}</span>
                       <div>
-                        <span className="text-xs font-semibold text-slate-400 block">
+                        <span className="text-xs font-bold text-slate-500 block">
                           {uni.city}, {uni.country}
                         </span>
-                        <span className="text-xs font-mono font-bold text-emerald-400">
+                        <span className="text-xs font-mono font-bold text-emerald-700">
                           {uni.rankingTier}
                         </span>
                       </div>
@@ -234,59 +234,60 @@ export const UniversitySearch: React.FC = () => {
                     <button
                       onClick={() => toggleSavedUniversity(uni.id)}
                       className={`p-2 rounded-xl transition-colors cursor-pointer ${
-                        isSaved ? 'text-pink-400 bg-pink-500/20' : 'text-slate-400 hover:text-white'
+                        isSaved ? 'text-pink-600 bg-pink-50' : 'text-slate-400 hover:text-slate-700'
                       }`}
                     >
                       <Bookmark className="w-4 h-4 fill-current" />
                     </button>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white leading-tight">{uni.name}</h3>
+                  <h3 className="text-base font-bold text-slate-900 leading-snug">{uni.name}</h3>
 
-                  <p className="text-xs text-slate-300 leading-relaxed line-clamp-3">
+                  <p className="text-xs text-slate-600 leading-relaxed line-clamp-3">
                     {uni.description}
                   </p>
 
-                  <div className="space-y-2 pt-2 border-t border-slate-800/80 text-xs">
+                  <div className="space-y-2 pt-2 border-t border-slate-100 text-xs">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                        Popular Programs
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                        Popular Academic Faculties:
                       </span>
-                      <p className="text-xs text-indigo-300 font-medium mt-0.5">
+                      <p className="text-xs text-indigo-700 font-semibold mt-0.5">
                         {uni.popularPrograms.slice(0, 3).join(' • ')}
                       </p>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs text-slate-400">
+                    <div className="flex items-center justify-between text-xs text-slate-600">
                       <span>Acceptance Rate</span>
-                      <span className="font-bold text-white font-mono">{uni.acceptanceRate}</span>
+                      <span className="font-bold text-slate-900 font-mono">{uni.acceptanceRate}</span>
                     </div>
 
-                    <div className="text-[11px] text-slate-400">
-                      <span className="text-slate-500">Tuition:</span> {uni.tuitionInfo}
+                    <div className="p-2 rounded-xl bg-amber-50 border border-amber-200 text-[11px] text-amber-900 font-semibold">
+                      Tuition: {uni.tuitionInfo}
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-5 pt-3 border-t border-slate-800 flex items-center justify-between">
+                <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
                   <div className="flex items-center gap-1">
                     {uni.calipsAffinity.map((c) => (
                       <span
                         key={c}
-                        className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300"
+                        className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-700"
                       >
                         {c}
                       </span>
                     ))}
                   </div>
 
+                  {/* Direct Access Official Portal Link */}
                   <a
                     href={uni.website}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1 text-xs font-semibold text-indigo-400 hover:text-indigo-300"
+                    className="flex items-center gap-1.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 px-3 py-1.5 rounded-xl shadow-xs transition-colors"
                   >
-                    <span>Portal</span>
+                    <span>Visit Official Website</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>
