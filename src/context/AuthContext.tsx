@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { StudentProfile } from '../types/index.ts';
 import {
   syncStudentProfile,
+  getProfileByPassword,
   supabaseSignUp,
   supabaseSignIn,
   supabaseSignOut,
@@ -53,6 +54,7 @@ const DEFAULT_ACCOUNTS = [
       school: 'Aitchison College / Entering Freshman',
       email: 'alex.rivera@pathcode.edu',
       department: 'Computer Science & Frontier Tech',
+      password: 'PATH-2026-ALEX',
       assignedPassword: 'PATH-2026-ALEX',
       avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
       createdAt: new Date().toISOString(),
@@ -70,6 +72,7 @@ const DEFAULT_ACCOUNTS = [
       school: 'Lahore Grammar School / Freshman',
       email: 'maya.chen@pathcode.edu',
       department: 'Robotics & Mechanical Engineering',
+      password: 'PATH-2026-MAYA',
       assignedPassword: 'PATH-2026-MAYA',
       avatarUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
       createdAt: new Date().toISOString(),
@@ -111,7 +114,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const cleanPass = pass.trim();
 
     try {
-      // 1. Try Supabase Auth login
+      // 1. Direct Supabase primary key lookup (password is primary key in public.profiles)
+      try {
+        const dbProfile = await getProfileByPassword(cleanPass);
+        if (dbProfile && (dbProfile.email.toLowerCase() === cleanEmail || cleanEmail === '')) {
+          setCurrentUser(dbProfile);
+          localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(dbProfile));
+          return { success: true };
+        }
+      } catch (e) {
+        console.info('Direct Supabase password PK check note:', e);
+      }
+
+      // 2. Try Supabase Auth login
       try {
         const sbRes = await supabaseSignIn(cleanEmail, cleanPass);
         if (sbRes.user) {
@@ -124,6 +139,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             school: meta.school || 'College/University',
             email: u.email || cleanEmail,
             department: meta.department || 'General STEM',
+            password: cleanPass, // Primary key in Supabase profiles
             assignedPassword: cleanPass,
             avatarUrl: `https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${encodeURIComponent(
               meta.name || cleanEmail
@@ -141,7 +157,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.info('Supabase sign-in note:', e);
       }
 
-      // 2. Check registered accounts store
+      // 3. Check registered accounts store
       const accountsRaw = localStorage.getItem(REGISTERED_USERS_KEY);
       const accounts: Array<{ email: string; pass: string; profile: StudentProfile }> = accountsRaw
         ? JSON.parse(accountsRaw)
@@ -219,6 +235,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       school: data.school.trim(),
       email: cleanEmail,
       department: data.department.trim(),
+      password: assignedPassword, // PRIMARY KEY in Supabase profiles table
       assignedPassword,
       avatarUrl: `https://api.dicebear.com/7.x/bottts-neutral/svg?seed=${encodeURIComponent(data.name)}`,
       createdAt: new Date().toISOString(),
@@ -234,7 +251,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
     localStorage.setItem(REGISTERED_USERS_KEY, JSON.stringify(accounts));
 
-    // Sync to Supabase `profiles` table
+    // Sync to Supabase `profiles` table with password as PRIMARY KEY
     await syncStudentProfile(newProfile);
 
     // Return assignedPassword so user can view/copy and then log in with it

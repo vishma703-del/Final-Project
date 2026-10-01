@@ -15,6 +15,7 @@ export interface StudentProfile {
   school: string;
   email: string;
   department: string;
+  password?: string; // Primary key in Supabase profiles table
   assignedPassword?: string;
   avatarUrl?: string;
   createdAt: string;

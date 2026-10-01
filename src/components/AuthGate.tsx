@@ -171,8 +171,12 @@ export const AuthGate: React.FC<AuthGateProps> = ({ onSuccess, openDbModal }) =>
               </button>
             </div>
 
-            <div className="text-xs text-slate-500 bg-amber-50 border border-amber-200/80 p-3 rounded-xl text-left">
-              <strong>Important:</strong> Please save this password. You will use it to log in now and on all future visits.
+            <div className="text-xs text-slate-600 bg-amber-50 border border-amber-200/80 p-3 rounded-xl text-left space-y-1.5">
+              <div><strong>Important:</strong> Please copy and save this password. You will use it to log in now and on all future visits.</div>
+              <div className="text-[11px] text-indigo-700 flex items-center gap-1.5 font-medium">
+                <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>Saved as <strong>Primary Key</strong> in the Supabase <code className="font-mono bg-white px-1 py-0.5 rounded border border-indigo-200">profiles</code> table.</span>
+              </div>
             </div>
 
             <button

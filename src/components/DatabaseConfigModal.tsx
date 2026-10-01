@@ -237,7 +237,7 @@ export const DatabaseConfigModal: React.FC<DatabaseConfigModalProps> = ({ isOpen
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
               <Terminal className="w-4 h-4 text-emerald-600" />
-              <span>SQL Schema & Row Level Security Script</span>
+              <span>SQL Schema (Password as Primary Key) & RLS Script</span>
             </div>
             <button
               onClick={handleCopySchema}
@@ -248,11 +248,22 @@ export const DatabaseConfigModal: React.FC<DatabaseConfigModalProps> = ({ isOpen
             </button>
           </div>
 
+          <div className="p-3 rounded-xl bg-indigo-50/80 border border-indigo-100 flex items-center justify-between text-xs text-indigo-900">
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded-md bg-indigo-600 text-white font-mono font-bold text-[10px]">
+                PRIMARY KEY
+              </span>
+              <span>
+                <strong>public.profiles</strong>: Assigned password is saved directly as the <strong>Primary Key</strong> (<code className="font-mono text-[11px] bg-white px-1.5 py-0.5 rounded border border-indigo-200">password text primary key</code>).
+              </span>
+            </div>
+          </div>
+
           <pre className="p-4 rounded-2xl bg-slate-900 border border-slate-800 text-[11px] font-mono text-emerald-400 max-h-48 overflow-y-auto leading-relaxed">
             {SUPABASE_SQL_SCHEMA}
           </pre>
           <p className="text-[11px] text-slate-500">
-            Paste this SQL script into the Supabase SQL editor to create the `profiles` and `assessments` tables and active Row Level Security policies.
+            Paste this SQL script into the Supabase SQL editor to create the `profiles` table with `password text primary key` and `assessments` tables with Row Level Security.
           </p>
         </div>
 
