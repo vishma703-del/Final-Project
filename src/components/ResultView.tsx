@@ -411,24 +411,27 @@ export const ResultView: React.FC<ResultViewProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <span className="text-xs font-mono uppercase tracking-widest text-emerald-600 font-bold">
-              Global Higher Education (PKR Tuition)
+              Higher Education in Pakistan (Tuition in PKR)
             </span>
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
-              Top Authentic Universities for {result.pathCode}
+              Top Authentic Universities in Pakistan for {result.pathCode}
             </h3>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Verified Pakistani institutions offering premier academic faculties aligned with your decoded PathCode.
+            </p>
           </div>
 
           <button
             onClick={onExploreUniversities}
             className="flex items-center gap-2 text-xs font-bold text-indigo-600 hover:text-indigo-800 cursor-pointer"
           >
-            <span>Search All Countries & Cities</span>
+            <span>Explore All Worldwide Universities</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {matchedUniversities.slice(0, 3).map((uni) => {
+          {matchedUniversities.slice(0, 6).map((uni) => {
             const isSaved = currentUser?.savedUniversities?.includes(uni.id);
             return (
               <div

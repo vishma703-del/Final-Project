@@ -123,6 +123,13 @@ export const AssessmentProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   };
 
   const finishAssessment = async (): Promise<AssessmentResult> => {
+    const answeredCount = Object.keys(answers).length;
+    if (answeredCount < 60) {
+      throw new Error(
+        `The Discover my career assessment will only proceed after answering all 60 questions. Currently answered: ${answeredCount}/60.`
+      );
+    }
+
     setIsSubmitting(true);
     try {
       // Calculate scores for all 6 categories (0 to 10 each)

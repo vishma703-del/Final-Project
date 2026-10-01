@@ -22,7 +22,7 @@ interface AuthGateProps {
 }
 
 export const AuthGate: React.FC<AuthGateProps> = ({ onSuccess, openDbModal }) => {
-  const { login, register, loginAsDemoStudent } = useAuth();
+  const { login, register } = useAuth();
 
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
 
@@ -98,16 +98,6 @@ export const AuthGate: React.FC<AuthGateProps> = ({ onSuccess, openDbModal }) =>
     setLoginPassword(assignedPasswordDisplay || '');
     setAssignedPasswordDisplay(null);
     setActiveTab('login');
-  };
-
-  const handleFillDemo = (demoType: 'alex' | 'maya') => {
-    if (demoType === 'alex') {
-      setEmail('alex.rivera@pathcode.edu');
-      setLoginPassword('PATH-2026-ALEX');
-    } else {
-      setEmail('maya.chen@pathcode.edu');
-      setLoginPassword('PATH-2026-MAYA');
-    }
   };
 
   return (
@@ -299,29 +289,6 @@ export const AuthGate: React.FC<AuthGateProps> = ({ onSuccess, openDbModal }) =>
                 >
                   {isSubmitting ? 'Authenticating...' : 'Unlock PathCode'}
                 </button>
-
-                {/* Quick Evaluator Pre-fills */}
-                <div className="pt-2 border-t border-slate-100 space-y-2">
-                  <p className="text-[11px] text-slate-500 text-center font-medium">
-                    Testing or reviewing? Use pre-registered student credentials:
-                  </p>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => handleFillDemo('alex')}
-                      className="py-1.5 px-2 rounded-xl bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 text-[11px] font-semibold border border-slate-200 transition-colors"
-                    >
-                      Fill: Alex (CS Student)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleFillDemo('maya')}
-                      className="py-1.5 px-2 rounded-xl bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 text-[11px] font-semibold border border-slate-200 transition-colors"
-                    >
-                      Fill: Maya (Robotics)
-                    </button>
-                  </div>
-                </div>
               </form>
             ) : (
               /* TAB 2: FIRST-TIME REGISTRATION FORM */

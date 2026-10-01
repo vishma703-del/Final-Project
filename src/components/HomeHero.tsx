@@ -133,7 +133,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                  <span>Matched careers, majors, skills to build & authentic universities (in PKR)</span>
+                  <span>Matched careers, majors, skills to build & authentic universities in Pakistan (in PKR)</span>
                 </div>
               </div>
             </div>
